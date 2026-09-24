@@ -1,9 +1,9 @@
 // pulse.jsx — "Pulse" tab: fast markets that settle in minutes
 const PULSE_EVENTS = [
-  { id:'p1', sport:'football', league:'Brasileirão Série A', minute:"63'", home:'Flamengo', away:'Palmeiras', hs:1, as:1,
+  { id:'p1', sport:'football', league:'Brazil / Brasileirão Série A', minute:"63'", home:'Flamengo', away:'Palmeiras', homeLogo:'assets/logo-flamengo.svg', awayLogo:'assets/logo-palmeiras.svg', hs:1, as:1,
     window:{ label:'Next 5 minutes', secs:300, left:222 },
     markets:[['Goal','4.50','1.15'],['Corner','2.10','1.65'],['Card','6.00','1.08']] },
-  { id:'p2', sport:'football', league:'Premier League', minute:"38'", home:'Arsenal', away:'Chelsea', hs:0, as:0,
+  { id:'p2', sport:'football', league:'England / Premier League', minute:"38'", home:'Arsenal', away:'Chelsea', homeLogo:'assets/logo-arsenal.svg', awayLogo:'assets/logo-chelsea.svg', hs:0, as:0,
     window:{ label:'Next 5 minutes', secs:300, left:48 },
     markets:[['Goal','5.20','1.12'],['Corner','1.95','1.80'],['Card','5.50','1.10']] },
   { id:'p3', sport:'basketball', league:'NBA', minute:'Q3 · 04:12', home:'Lakers', away:'Celtics', hs:78, as:81,
@@ -16,6 +16,9 @@ const PULSE_EVENTS = [
 const PULSE_ICONS = { football:'assets/icon-football-color.svg', tennis:'assets/icon-tennis-color.svg', basketball:'assets/icon-basketball-color.svg' };
 const PULSE_LABELS = { football:'Football', tennis:'Tennis', basketball:'Basketball' };
 
+function PulseTeam({ name, logo }){
+  return <span style={{ display:'flex', alignItems:'center', gap:8, minWidth:0 }}>{logo && <img src={asset(logo)} width="20" height="20" alt="" style={{ display:'block', flex:'0 0 auto', objectFit:'contain' }}/>}<span style={{ overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{name}</span></span>;
+}
 function pulseFmt(s){ const m=Math.floor(s/60), r=s%60; return String(m).padStart(2,'0')+':'+String(r).padStart(2,'0'); }
 function pulseJitter(p){ const v=parseFloat(p)*(0.9+Math.random()*0.2); return Math.max(1.01,v).toFixed(2); }
 
@@ -52,9 +55,9 @@ function PulseCard({ ev, left, selections, onPick }){
         </div>
         <span style={{ color:'#828282', fontSize:11, whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis', minWidth:0, textAlign:'right' }}>{ev.league}</span>
       </div>
-      <div style={{ display:'grid', gridTemplateColumns:'1fr auto', rowGap:4, fontSize:14, color:'#fff', fontWeight:500 }}>
-        <span>{ev.home}</span><span style={{ color:'#00dd70', fontWeight:700, textAlign:'right' }}>{ev.hs}</span>
-        <span>{ev.away}</span><span style={{ color:'#00dd70', fontWeight:700, textAlign:'right' }}>{ev.as}</span>
+      <div style={{ display:'grid', gridTemplateColumns:'1fr auto', rowGap:4, alignItems:'center', fontSize:14, color:'#fff', fontWeight:500 }}>
+        <PulseTeam name={ev.home} logo={ev.homeLogo}/><span style={{ color:'#00dd70', fontWeight:700, textAlign:'right' }}>{ev.hs}</span>
+        <PulseTeam name={ev.away} logo={ev.awayLogo}/><span style={{ color:'#00dd70', fontWeight:700, textAlign:'right' }}>{ev.as}</span>
       </div>
       <div style={{ position:'relative', height:20, borderRadius:6, background:'#000', overflow:'hidden' }}>
         {timed && <div style={{ position:'absolute', right:0, top:0, bottom:0, width:pct+'%', background: 'rgba(0,221,112,0.2)', borderLeft:'3px solid rgba(0,221,112,0.3)', boxSizing:'border-box', transition:'width 1s linear' }}></div>}
@@ -107,13 +110,13 @@ function PulseTab(){
     <div>
       <div style={{ padding:'14px 4px 4px', display:'flex', flexDirection:'column', alignItems:'center', textAlign:'center', gap:2 }}>
         <span style={{ fontSize:18, fontWeight:700, color:'#fff' }}>Bet on what happens next</span>
-        <span style={{ fontSize:13, color:'#828282' }}>Markets settle in <span style={{ color:'#00dd70', fontWeight:700 }}>5</span> minutes</span>
+        <span style={{ fontSize:13, color:'#828282' }}>Markets in here generally settle within <span style={{ color:'#00dd70', fontWeight:700 }}>x</span> minutes.</span>
       </div>
       {groups.map(g => (
         <React.Fragment key={g.sport}>
           <SectionHeader icon={<img src={asset(PULSE_ICONS[g.sport])} width="22" height="22" alt=""/>} title={PULSE_LABELS[g.sport]} count={g.items.length}/>
           <div style={{ display:'flex', flexDirection:'column', gap:8, marginBottom:8 }}>
-            {g.items.map(ev => <PulseCard key={ev.id} ev={ev} left={left[ev.id]} selections={selections} onPick={pick}/>)}
+            {g.items.map(ev => { const v = new URLSearchParams(location.search).get('var'); const Card = (v === '2' && window.PulseCard2) || (v === '3' && window.PulseCard3) || PulseCard; return <Card key={ev.id} ev={ev} left={left[ev.id]} selections={selections} onPick={pick}/>; })}
           </div>
         </React.Fragment>
       ))}

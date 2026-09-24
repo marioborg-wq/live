@@ -305,7 +305,7 @@ function EventCard({ event, isPinned, onTogglePin, isPinning, isLast, multiplas,
           )}
         </div>
         <div style={{ display:'flex', alignItems:'center', gap: 6 }}>
-          <span style={{ fontSize: 11, color:'#828282' }}>{event.league}</span>
+          <span style={{ fontSize: 11, color:'#828282' }}>{({ 'Brasileirão Série A':'Brazil / ', 'Premier League':'England / ', 'La Liga':'Spain / ' })[event.league] || ''}{event.league}</span>
         </div>
       </div>
 

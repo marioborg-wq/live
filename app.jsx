@@ -151,7 +151,7 @@ function renderLeagueGroups(items, scopeKey, ctx) {
 function App() {
   const [events, setEvents] = useState(() => window.INITIAL_EVENTS);
   const [pinnedIds, setPinnedIds] = useState([]); // ordered: most recent first
-  const [activeTab, setActiveTab] = useState('hot');
+  const [activeTab, setActiveTab] = useState(() => new URLSearchParams(location.search).get('tab') || 'hot');
   const [animatingId, setAnimatingId] = useState(null); // event currently flying
   const [badgeBump, setBadgeBump] = useState(0);
   const [toast, setToast] = useState(null);
