@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>KTO · Live Lobby — "Hot" tab</title>
+<link rel="stylesheet" href="colors_and_type.css"/>
+<style>
+  :root { color-scheme: dark; }
+  html, body { background: #0a0a0a; margin: 0; min-height: 100vh; }
+  body {
+    display: grid; place-items: center;
+    padding: 24px;
+    font-family: var(--font-body);
+    color: #fff;
+  }
+  ::-webkit-scrollbar { width: 0; height: 0; }
+
+  .phone {
+    width: 375px;
+    border-radius: 44px;
+    background: #000;
+    border: 9px solid #1a1a1a;
+    box-shadow: 0 28px 72px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04);
+    overflow: hidden;
+    position: relative;
+    display: flex; flex-direction: column;
+    height: 812px;
+  }
+
+  .phone-scroll {
+    flex: 1; overflow-y: auto; overflow-x: hidden;
+    background: #000;
+  }
+
+  /* Pulse + flame animations */
+  @keyframes kto-hot-pulse {
+    0%, 100% { box-shadow: 0 0 0 1px rgba(255,83,83,0.4), 0 0 0 0 rgba(255,83,83,0); }
+    50%      { box-shadow: 0 0 0 1px rgba(255,83,83,0.8), 0 0 24px 0 rgba(255,83,83,0.35); }
+  }
+  .kto-pulse-dot {
+    width: 6px; height: 6px; border-radius: 50%; background: #00DD70;
+    box-shadow: 0 0 0 0 rgba(0,221,112,0.6);
+    animation: kto-live-pulse 1.4s infinite;
+    display: inline-block;
+  }
+  @keyframes kto-live-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(0,221,112,0.6); }
+    70%  { box-shadow: 0 0 0 6px rgba(0,221,112,0); }
+    100% { box-shadow: 0 0 0 0 rgba(0,221,112,0); }
+  }
+
+  /* Marquee for FOMO banner */
+  .kto-fomo.is-marquee > span {
+    animation: kto-marquee 9s linear infinite;
+  }
+  @keyframes kto-marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-30%); }
+  }
+
+  /* Subtle "flame border" sweep */
+  .kto-flame-border {
+    position: relative;
+  }
+  .kto-flame-border::before {
+    content: ""; position: absolute; inset: -1px; border-radius: 13px;
+    background: linear-gradient(120deg, #FA9600, #FF5353, #FA9600);
+    background-size: 200% 100%;
+    animation: kto-flame-sweep 4s linear infinite;
+    z-index: -1;
+  }
+  @keyframes kto-flame-sweep {
+    0%   { background-position: 0% 0%; }
+    100% { background-position: 200% 0%; }
+  }
+</style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script src="data.js"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="icons.jsx"></script>
+<script type="text/babel" src="chrome.jsx"></script>
+<script type="text/babel" src="cards.jsx"></script>
+<script type="text/babel" src="hot-tab.jsx"></script>
+
+<script type="text/babel" data-presets="react">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "mode": "mixed",
+  "fomoStyle": "static",
+  "fomoColor": "default",
+  "cardGlow": "border",
+  "maxHot": 1,
+  "showVelocity": false,
+  "showBadge": true,
+  "cardGap": 10
+}/*EDITMODE-END*/;
+
+function App() {
+  const { PhoneStatusBar, BrowserBar, KtoHeader, SportTabs, HotTab, TweaksPanel,
+          TweakSection, TweakRadio, TweakSelect, TweakToggle, TweakSlider, useTweaks } = window;
+  const [t, setT] = useTweaks(TWEAK_DEFAULTS);
+  const [tab, setTab] = React.useState("hot");
+  const [selection, setSelection] = React.useState(null);
+
+  const onSelect = (id) => setSelection(prev => prev === id ? null : id);
+
+  // 'tab' on its own controls the Sport Nav highlight; Hot tab content can
+  // also be flipped to Football/Basketball "decisive moment" views via Tweaks.
+  const hotMode = tab === "hot" ? t.mode : "mixed";
+
+  return (
+    <>
+      <div className="phone">
+        <PhoneStatusBar/>
+        <BrowserBar/>
+        <div className="phone-scroll">
+          <KtoHeader/>
+          <SportTabs active={tab} onSelect={setTab}/>
+          {tab === "hot" && (
+            <HotTab mode={hotMode} tweaks={t}
+              selection={selection} onSelect={onSelect}/>
+          )}
+          {tab !== "hot" && (
+            <div style={{
+              padding: "40px 16px", textAlign: "center", color: "#828282",
+              display: "flex", flexDirection: "column", gap: 8, alignItems: "center",
+            }}>
+              <div style={{ width: 56, height: 56, borderRadius: "50%",
+                background: "#1E1E1E", display: "inline-flex",
+                alignItems: "center", justifyContent: "center", marginBottom: 6 }}>
+                <window.KIcon name="eye" size={22} color="#828282"/>
+              </div>
+              <div style={{ color: "#fff", fontWeight: 700, fontSize: 16 }}>
+                {tab === "pin" ? "Your pinned events" : "Sport listing"}
+              </div>
+              <div style={{ fontSize: 12 }}>
+                Tap <b style={{ color:"#00DD70" }}>🔥 Hot</b> to see the most relevant live events right now.
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <TweaksPanel title="Hot tab — Tweaks">
+        <TweakSection label="Content">
+          <TweakRadio label="Hot view"
+            options={[
+              { value: "mixed",      label: "Mixed" },
+              { value: "football",   label: "Football" },
+              { value: "basketball", label: "Basketball" },
+            ]}
+            value={t.mode} onChange={v => setT("mode", v)}/>
+          <TweakSlider label="Max hot events" min={1} max={5} step={1}
+            value={t.maxHot} onChange={v => setT("maxHot", v)}/>
+          <TweakToggle label="Show 'AUTO · TOP 5' badge"
+            value={t.showBadge} onChange={v => setT("showBadge", v)}/>
+          <TweakToggle label="Show live bet velocity"
+            value={t.showVelocity} onChange={v => setT("showVelocity", v)}/>
+        </TweakSection>
+        <TweakSection label="FOMO banner">
+          <TweakRadio label="Style"
+            options={[
+              { value: "static",  label: "Static" },
+              { value: "marquee", label: "Marquee" },
+              { value: "none",    label: "Off" },
+            ]}
+            value={t.fomoStyle} onChange={v => setT("fomoStyle", v)}/>
+          <TweakSelect label="Colour"
+            options={[
+              { value: "default", label: "Orange → Red" },
+              { value: "yellow",  label: "Yellow → Orange" },
+              { value: "red",     label: "Red → Deep red" },
+              { value: "green",   label: "Hot Green" },
+            ]}
+            value={t.fomoColor} onChange={v => setT("fomoColor", v)}/>
+        </TweakSection>
+        <TweakSection label="Card emphasis">
+          <TweakRadio label="Glow"
+            options={[
+              { value: "none",   label: "None" },
+              { value: "border", label: "Border" },
+              { value: "pulse",  label: "Pulse" },
+              { value: "flame",  label: "Flame" },
+            ]}
+            value={t.cardGlow} onChange={v => setT("cardGlow", v)}/>
+          <TweakSlider label="Card gap" min={6} max={18} step={1}
+            value={t.cardGap} onChange={v => setT("cardGap", v)}/>
+        </TweakSection>
+      </TweaksPanel>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+</body>
+</html>

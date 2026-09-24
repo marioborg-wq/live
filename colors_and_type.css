@@ -1,0 +1,331 @@
+/* =========================================================================
+   KTO Design System — Foundation 2.0
+   Tokens extracted from the Figma `Foundation 2.0.fig` Colour Primitives +
+   Typography sections.
+   ========================================================================= */
+
+/* Font imports — NN Swinton STD loaded locally from the brand
+   licensed OTFs (HeavyItalic for display, Bold for secondary display).
+   Inter remains from Google Fonts. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap');
+
+@font-face {
+  font-family: "NN Swinton STD";
+  src: url("fonts/NNSwintonSTD-HeavyItalic.otf") format("opentype");
+  font-weight: 800 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "NN Swinton STD";
+  src: url("fonts/NNSwintonSTD-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* ---------------------------------------------------------------------
+     COLOUR PRIMITIVES — Brand
+  --------------------------------------------------------------------- */
+  --color-brand-primary:  #1E1E1E;  /* surface-brand (dark) */
+  --color-brand-accent1:  #DA0000;  /* red */
+  --color-brand-accent2:  #DA0000;  /* red (duplicate in Figma) */
+
+  /* ---------------------------------------------------------------------
+     COLOUR PRIMITIVES — Products
+  --------------------------------------------------------------------- */
+  --color-sports:         #DA0000;  /* red */
+  --color-casino:         #FAD749;  /* yellow */
+  --color-live-casino:    #00DD70;  /* green */
+  --color-bet-builder:    #00DD70;  /* green */
+  --color-price-boost:    #FAD749;  /* yellow */
+  --color-virtual-sports: #DA0000;  /* red */
+
+  /* ---------------------------------------------------------------------
+     COLOUR PRIMITIVES — Neutrals
+  --------------------------------------------------------------------- */
+  --color-neutral-darkest:  #1E1E1E;
+  --color-neutral-900:      #03A700;  /* (unusual in Figma — semantic overlap with success) */
+  --color-neutral-800:      #900000;  /* (unusual — used for deep danger accents) */
+  --color-neutral-700:      #5A5A5A;
+  --color-neutral-600:      #828282;
+  --color-neutral-500:      #00A097;
+  --color-neutral-400:      #1E1E1E;
+  --color-neutral-300:      #323232;
+  --color-neutral-200:      #BDBDBD;
+  --color-neutral-100:      #D9D9D9;
+  --color-neutral-lightest: #000000;
+
+  /* Observed but unlabelled neutrals — useful shorthand */
+  --color-black:            #000000;
+  --color-white:            #FFFFFF;
+  --color-surface-raised:   #323232;
+  --color-surface-top:      #3C3C3C;
+  --color-surface-page:     #F5F5F5;  /* rare light-surface for print */
+
+  /* ---------------------------------------------------------------------
+     COLOUR PRIMITIVES — Special
+  --------------------------------------------------------------------- */
+  --color-special-team: #218AFB;
+  --color-special-vip:  #03A700;
+
+  /* ---------------------------------------------------------------------
+     COLOUR PRIMITIVES — Error Handling / Status
+  --------------------------------------------------------------------- */
+  --color-success:        #0066FF;
+  --color-success-tint:   #B5A010;
+  --color-error:          #D9FAEA;
+  --color-error-tint:     #FF6D6D;
+  --color-warning:        #FFE8E8;
+  --color-warning-strong: #FA9600;
+  --color-info:           #00AD59;
+  --color-info-tint:      #D9FAEA;
+
+  /* ---------------------------------------------------------------------
+     COLOUR PRIMITIVES — Scoreboard
+  --------------------------------------------------------------------- */
+  --color-score: #00AD59;
+  --color-time:  #D9FAEA;
+  --color-serve: #FF6D6D;
+
+  /* ---------------------------------------------------------------------
+     COLOUR PRIMITIVES — FoMo (urgency / availability)
+  --------------------------------------------------------------------- */
+  --color-fomo-low:       #00AD59;
+  --color-fomo-low-tint:  #D9FAEA;
+  --color-fomo-mid:       #FF6D6D;
+  --color-fomo-mid-tint:  #FFE8E8;
+  --color-fomo-high:      #FA9600;
+  --color-fomo-high-tint: #FFEACC;
+
+  /* ---------------------------------------------------------------------
+     COLOUR PRIMITIVES — Odds
+  --------------------------------------------------------------------- */
+  --color-odds:          #FAD749;
+  --color-odds-selected: #FFF5CD;
+  --color-odds-invert:   #FFF5CD;
+
+  /* ---------------------------------------------------------------------
+     SEMANTIC TOKENS — text / icon / bg / surface / border
+     (pattern: role-default / hover / selected / disabled)
+  --------------------------------------------------------------------- */
+  --text-default:    #FFFFFF;
+  --text-muted:      #828282;
+  --text-subtle:     #5A5A5A;
+  --text-disabled:   #505050;
+  --text-inverse:    #000000;
+  --text-link:       #00DD70;
+  --text-danger:     #FF6D6D;
+  --text-warning:    #FA9600;
+
+  --icon-default:    #828282;
+  --icon-active:     #FFFFFF;
+  --icon-accent:     #FAD749;
+
+  --bg-page:         #000000;
+  --bg-surface:      #1E1E1E;
+  --bg-surface-2:    #323232;
+  --bg-surface-3:    #3C3C3C;
+  --bg-overlay:      rgba(0,0,0,0.6);
+  --bg-tabs-active:  rgba(0, 221, 112, 0.20);  /* #00DD70 @ 20% — active tab/chip fill */
+
+  --border-subtle:   #1E1E1E;
+  --border-default:  #323232;
+  --border-strong:   #3C3C3C;
+  --border-accent:   #DA0000;
+
+  /* ---------------------------------------------------------------------
+     NUMERIC PRIMITIVES — spacing (4 px base)
+  --------------------------------------------------------------------- */
+  --spacing-0:  0;
+  --spacing-1:  4px;
+  --spacing-2:  8px;
+  --spacing-3:  12px;
+  --spacing-4:  16px;
+  --spacing-5:  20px;
+  --spacing-6:  24px;
+  --spacing-7:  32px;
+  --spacing-8:  40px;
+  --spacing-9:  56px;
+  --spacing-10: 72px;
+
+  /* ---------------------------------------------------------------------
+     NUMERIC PRIMITIVES — radius
+  --------------------------------------------------------------------- */
+  --radius-xs:    2px;   /* section boundary */
+  --radius-sm:    3px;   /* small chip */
+  --radius-base:  4px;   /* tiny pill */
+  --radius-md:    5px;   /* default UI card/button */
+  --radius-lg:    6px;   /* emphasised button / odds button */
+  --radius-xl:    12px;  /* grouped module */
+  --radius-2xl:   16px;  /* pill navigation chip */
+  --radius-3xl:   18px;  /* large wallet pill */
+  --radius-full:  10000px;
+
+  /* ---------------------------------------------------------------------
+     NUMERIC PRIMITIVES — border widths
+  --------------------------------------------------------------------- */
+  --border-width-thin:   1px;
+  --border-width-medium: 2px;
+
+  /* ---------------------------------------------------------------------
+     NUMERIC PRIMITIVES — opacity
+  --------------------------------------------------------------------- */
+  --opacity-disabled: 0.4;
+  --opacity-muted:    0.6;
+  --opacity-overlay:  0.6;
+
+  /* ---------------------------------------------------------------------
+     SHADOWS / ELEVATION — used sparingly; KTO leans on stepped neutrals
+  --------------------------------------------------------------------- */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.5);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.5);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.6);
+  --shadow-focus: 0 0 0 2px rgba(218,0,0,0.5);
+
+  /* ---------------------------------------------------------------------
+     TYPOGRAPHY — families
+  --------------------------------------------------------------------- */
+  --font-display: "NN Swinton STD", "Antonio", "Oswald", system-ui, sans-serif;
+  --font-display-bold: "NN Swinton STD", system-ui, sans-serif;
+  --font-body:    "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:    "Special Gothic Condensed One", "JetBrains Mono", ui-monospace, monospace;
+
+  /* ---------------------------------------------------------------------
+     TYPOGRAPHY — semantic roles (Desktop)
+     Based on Figma `Typography DESKTOP` section.
+  --------------------------------------------------------------------- */
+  --h1-family: var(--font-display);
+  --h1-size:   50px;
+  --h1-weight: 800;
+  --h1-line:   1;
+  --h1-case:   uppercase;
+  --h1-style:  italic;
+
+  --h2-family: var(--font-body);
+  --h2-size:   25px;
+  --h2-weight: 700;
+  --h2-line:   1.15;
+
+  --h3-family: var(--font-body);
+  --h3-size:   20px;
+  --h3-weight: 700;
+  --h3-line:   1.6;
+
+  --h4-family: var(--font-body);
+  --h4-size:   17px;
+  --h4-weight: 700;
+  --h4-line:   1.4;
+
+  --p-family:  var(--font-body);
+  --p-size:    16px;
+  --p-weight:  400;
+  --p-line:    1.5;
+
+  --small-size: 14px;
+  --caption-size: 12px;
+  --micro-size:   10px;
+
+  --odds-family: var(--font-body);
+  --odds-size:   17px;
+  --odds-weight: 700;
+  --odds-line:   1.15;
+
+  --label-family: var(--font-body);
+  --label-size:   12px;
+  --label-weight: 600;
+  --label-case:   uppercase;
+  --label-tracking: 0.04em;
+}
+
+/* =========================================================================
+   SEMANTIC TYPE CLASSES
+   ========================================================================= */
+
+html, body {
+  background: var(--bg-page);
+  color: var(--text-default);
+  font-family: var(--font-body);
+  font-size: var(--p-size);
+  line-height: var(--p-line);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+.kto-h1 {
+  font-family: var(--h1-family);
+  font-size: var(--h1-size);
+  font-weight: var(--h1-weight);
+  font-style: var(--h1-style);
+  line-height: var(--h1-line);
+  text-transform: var(--h1-case);
+  color: var(--text-default);
+  margin: 0;
+}
+
+.kto-h2 {
+  font-family: var(--h2-family);
+  font-size: var(--h2-size);
+  font-weight: var(--h2-weight);
+  line-height: var(--h2-line);
+  color: var(--text-default);
+  margin: 0;
+}
+
+.kto-h3 {
+  font-family: var(--h3-family);
+  font-size: var(--h3-size);
+  font-weight: var(--h3-weight);
+  line-height: var(--h3-line);
+  color: var(--text-default);
+  margin: 0;
+}
+
+.kto-h4 {
+  font-family: var(--h4-family);
+  font-size: var(--h4-size);
+  font-weight: var(--h4-weight);
+  line-height: var(--h4-line);
+  color: var(--text-default);
+  margin: 0;
+}
+
+.kto-p {
+  font-family: var(--p-family);
+  font-size: var(--p-size);
+  font-weight: var(--p-weight);
+  line-height: var(--p-line);
+  color: var(--text-default);
+  margin: 0;
+}
+
+.kto-small  { font-size: var(--small-size); line-height: 1.4; }
+.kto-caption { font-size: var(--caption-size); color: var(--text-muted); }
+.kto-micro   { font-size: var(--micro-size); color: var(--text-muted); }
+
+.kto-label {
+  font-family: var(--label-family);
+  font-size: var(--label-size);
+  font-weight: var(--label-weight);
+  text-transform: var(--label-case);
+  letter-spacing: var(--label-tracking);
+  color: var(--text-muted);
+}
+
+.kto-odds {
+  font-family: var(--odds-family);
+  font-size: var(--odds-size);
+  font-weight: var(--odds-weight);
+  line-height: var(--odds-line);
+  font-variant-numeric: tabular-nums;
+}
+
+.kto-display {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 1;
+}

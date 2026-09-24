@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Live Lobby Pinning · KTO</title>
+
+<!-- Resources referenced in JSX as string srcs -->
+<meta name="ext-resource-dependency" content="assets/logo-kto.svg" data-resource-id="logoKto" />
+<meta name="ext-resource-dependency" content="assets/icon-soccer.svg" data-resource-id="iconSoccer" />
+<meta name="ext-resource-dependency" content="assets/icon-tennis.svg" data-resource-id="iconTennis" />
+<meta name="ext-resource-dependency" content="assets/icon-basketball.svg" data-resource-id="iconBasketball" />
+<meta name="ext-resource-dependency" content="assets/icon-baseball.svg" data-resource-id="iconBaseball" />
+<meta name="ext-resource-dependency" content="assets/icon-open-all.svg" data-resource-id="iconOpenAll" />
+<meta name="ext-resource-dependency" content="assets/icon-close-all.svg" data-resource-id="iconCloseAll" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #000000;
+    --bg-1: #0d0d0d;
+    --bg-2: #1e1e1e;
+    --bg-3: #323232;
+    --bg-4: #3c3c3c;
+    --line: #1e1e1e;
+    --text: #ffffff;
+    --text-muted: #828282;
+    --text-dim: #505050;
+    --green: #00dd70;
+    --green-soft: rgba(0,221,112,0.2);
+    --green-border: rgba(0,221,112,0.3);
+    --red: #d71920;
+    --yellow: #fad749;
+    --pin: #fad749;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0; padding: 0;
+    background: #111;
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+    height: 100%;
+  }
+  #root { height: 100vh; width: 100vw; display: flex; align-items: center; justify-content: center; }
+</style>
+
+<!-- Thumbnail splash for bundled file -->
+<template id="__bundler_thumbnail" data-bg-color="#111111">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#111111"/>
+    <g transform="translate(600 400)">
+      <text x="0" y="0" text-anchor="middle" dominant-baseline="middle"
+            font-family="Inter, system-ui, sans-serif" font-weight="800"
+            font-size="180" fill="#d71920" letter-spacing="-6">KTO</text>
+      <circle cx="0" cy="140" r="14" fill="#fad749"/>
+    </g>
+  </svg>
+</template>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="ios-frame.jsx"></script>
+<script type="text/babel" src="components.standalone.jsx"></script>
+<script type="text/babel" src="data.jsx"></script>
+<script type="text/babel" src="app.standalone.jsx"></script>
+</body>
+</html>
