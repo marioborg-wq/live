@@ -5,11 +5,12 @@ const PULSE_QUESTIONS = {
   'Break of serve':'Will the server be broken?', 'Goes to deuce':'Will this game go to deuce?', 'Love game':'Will it be a love game?',
 };
 
-function PulseQIcon({ name }){
+function PulseQIcon({ name, mono }){
   const s = { width:16, height:16, viewBox:'0 0 24 24', fill:'none', stroke:'#828282', strokeWidth:2, strokeLinecap:'round', strokeLinejoin:'round', style:{ display:'block', flex:'0 0 auto' } };
+  if (name === 'Goal' && mono) return <span style={{ width:16, height:16, flex:'0 0 auto', background:'#828282', WebkitMask:`url(${asset('assets/icon-football-color.svg')}) center/contain no-repeat`, mask:`url(${asset('assets/icon-football-color.svg')}) center/contain no-repeat` }}></span>;
   if (name === 'Goal') return <svg {...s}><circle cx="12" cy="12" r="9"></circle><path d="M12 7l4 3-1.5 4.5h-5L8 10z"></path></svg>;
   if (name === 'Corner') return <svg {...s}><path d="M6 21V3"></path><path d="M6 4h11l-3 4 3 4H6"></path></svg>;
-  if (name === 'Card') return <svg {...s} stroke="none"><rect x="6" y="3" width="12" height="18" rx="2" fill="#fad749" transform="rotate(12 12 12)"></rect></svg>;
+  if (name === 'Card') return <svg {...s} stroke="none"><rect x="6" y="3" width="12" height="18" rx="2" fill={mono ? 'none' : '#fad749'} stroke={mono ? '#828282' : 'none'} strokeWidth="2" transform="rotate(12 12 12)"></rect></svg>;
   if (name === 'Foul called') return <svg {...s}><circle cx="9" cy="14" r="5"></circle><path d="M12 10l9-3v4l-6 2"></path></svg>;
   if (name === '6+ points (either)' || name === '3-pointer made') return <svg {...s}><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3v18M5.6 5.6c3 3 3 9.8 0 12.8M18.4 5.6c-3 3-3 9.8 0 12.8"></path></svg>;
   return <svg {...s}><circle cx="12" cy="12" r="9"></circle><path d="M5.5 5.5c3.5 3.5 3.5 9.5 0 13M18.5 5.5c-3.5 3.5-3.5 9.5 0 13"></path></svg>;

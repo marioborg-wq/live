@@ -108,15 +108,15 @@ function PulseTab(){
   const groups = ['football','basketball','tennis'].map(s => ({ sport:s, items: events.filter(e => e.sport === s) })).filter(g => g.items.length);
   return (
     <div>
-      <div style={{ padding:'14px 4px 4px', display:'flex', flexDirection:'column', alignItems:'center', textAlign:'center', gap:2 }}>
+      {new URLSearchParams(location.search).get('var') !== '4' && <div style={{ padding:'14px 4px 4px', display:'flex', flexDirection:'column', alignItems:'center', textAlign:'center', gap:2 }}>
         <span style={{ fontSize:18, fontWeight:700, color:'#fff' }}>Bet on what happens next</span>
         <span style={{ fontSize:13, color:'#828282' }}>Markets in here generally settle within <span style={{ color:'#00dd70', fontWeight:700 }}>x</span> minutes.</span>
-      </div>
+      </div>}
       {groups.map(g => (
         <React.Fragment key={g.sport}>
           <SectionHeader icon={<img src={asset(PULSE_ICONS[g.sport])} width="22" height="22" alt=""/>} title={PULSE_LABELS[g.sport]} count={g.items.length}/>
           <div style={{ display:'flex', flexDirection:'column', gap:8, marginBottom:8 }}>
-            {g.items.map(ev => { const v = new URLSearchParams(location.search).get('var'); const Card = (v === '2' && window.PulseCard2) || (v === '3' && window.PulseCard3) || PulseCard; return <Card key={ev.id} ev={ev} left={left[ev.id]} selections={selections} onPick={pick}/>; })}
+            {g.items.map(ev => { const v = new URLSearchParams(location.search).get('var'); const Card = (v === '2' && window.PulseCard2) || (v === '3' && window.PulseCard3) || (v === '4' && window.PulseCard4) || PulseCard; return <Card key={ev.id} ev={ev} left={left[ev.id]} selections={selections} onPick={pick}/>; })}
           </div>
         </React.Fragment>
       ))}
